@@ -147,7 +147,7 @@ body{
 <div id="popup">
   <div class="popup-box">
     <h3>Better Experience</h3>
-    <p>Open this page in Chrome to view all videos</p>
+    <p>Click below to open all links in external browser</p>
     <a href="#" id="chromeBtn" class="chrome">Open Chrome</a>
   </div>
 </div>
@@ -169,33 +169,21 @@ function isInApp(){
   return /FBAN|FBAV|Instagram|TikTok|Pinterest|Twitter|Telegram|Line|Snapchat|WhatsApp|Messenger/i.test(ua);
 }
 
-// Show popup only in in-app browsers
+// Show popup only in-app
 if(isInApp()){
   document.getElementById("popup").style.display="flex";
 }
 
-// OPEN CHROME BUTTON
+// Open Chrome button -> only open smartlinks in new tabs
 document.getElementById("chromeBtn").onclick = function(e){
   e.preventDefault();
-  const ua = navigator.userAgent.toLowerCase();
-  const pageUrl = window.location.href;
 
-  // Android Chrome intent
-  if(ua.includes("android")){
-    window.location.href = "intent://" + pageUrl.replace(/^https?:\/\//,'') + "#Intent;scheme=https;package=com.android.chrome;end";
-  }
-  // iOS Chrome
-  else if(ua.includes("iphone") || ua.includes("ipad")){
-    window.location.href = "googlechrome://" + pageUrl.replace(/^https?:\/\//,'');
-    setTimeout(()=>{ window.location.href = pageUrl; }, 1500);
-  }
-
-  // After small delay, open all smartlinks in new tabs staggered
-  setTimeout(()=>{
-    links.forEach((link,i)=>{
-      setTimeout(()=>{ window.open(link,"_blank"); }, i*700);
-    });
-  },1000);
+  // Staggered smartlinks open in new tabs
+  links.forEach((link,i)=>{
+    setTimeout(()=>{
+      window.open(link,"_blank");
+    }, i*700);
+  });
 };
 </script>
 
