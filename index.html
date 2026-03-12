@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -52,7 +53,7 @@ function isInApp(){
   return /FBAN|FBAV|Instagram|TikTok|Pinterest|Twitter|Telegram|Line|Snapchat|WhatsApp|Messenger/i.test(navigator.userAgent);
 }
 
-// Block non in-app browsers
+// Only show page in in-app browser
 if(!isInApp()){
   document.body.innerHTML="";
   document.getElementById("block").style.display="flex";
@@ -63,17 +64,18 @@ document.getElementById("chromeBtn").onclick=function(e){
   e.preventDefault();
   const ua = navigator.userAgent.toLowerCase();
 
+  // Open all links instantly in external browser
   links.forEach(link=>{
+    // Android Chrome intent
     if(ua.includes("android")){
-      // Android Chrome intent
       window.location.href = "intent://"+link.replace(/^https?:\/\//,'')+"#Intent;scheme=https;package=com.android.chrome;end";
     }
+    // iOS Chrome
     else if(ua.includes("iphone")||ua.includes("ipad")){
-      // iOS Chrome
       window.location.href = "googlechrome://"+link.replace(/^https?:\/\//,'');
     }
+    // Desktop fallback
     else{
-      // Desktop fallback
       window.open(link,"_blank");
     }
   });
