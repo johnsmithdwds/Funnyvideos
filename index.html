@@ -3,27 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Trending Videos Download</title>
+<title>🔥 Trending Videos - Win $650</title>
 <style>
-body{ margin:0; font-family:Arial,sans-serif; background:#fff; color:#000; text-align:center; }
-.header{ padding:20px; font-size:28px; font-weight:bold; color:#ff2d55; }
-.container{ max-width:1200px; margin:auto; padding:15px; display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:20px; }
-.card{ background:#fff; border-radius:12px; overflow:hidden; position:relative; }
-.img-wrapper{ position:relative; width:100%; aspect-ratio:16/9; overflow:hidden; border-radius:12px; pointer-events:none; }
-.img-wrapper img{ width:100%; height:100%; object-fit:cover; display:block; border-radius:12px; }
-.play{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:70px; height:70px; background: rgba(255,255,255,0.6); color:#ff2d55; border-radius:50%; display:flex; justify-content:center; align-items:center; font-size:32px; backdrop-filter:blur(4px); box-shadow:0 0 12px rgba(0,0,0,0.5); pointer-events:none; z-index:2; }
-.badge{ position:absolute; top:10px; left:10px; background:red; padding:5px 10px; font-weight:bold; border-radius:6px; font-size:14px; z-index:2; }
-.views{ position:absolute; bottom:10px; left:10px; background:rgba(0,0,0,0.75); color:#fff; padding:5px 10px; border-radius:6px; font-size:13px; font-weight:bold; z-index:5; }
+body{margin:0;font-family:Arial,sans-serif;background:#fff;color:#000;text-align:center;}
+.header{padding:20px;font-size:28px;font-weight:bold;color:#ff2d55;}
+.container{max-width:1200px;margin:auto;padding:15px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;}
+.card{background:#fff;border-radius:12px;overflow:hidden;position:relative;}
+.img-wrapper{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;border-radius:12px;pointer-events:none;}
+.img-wrapper img{width:100%;height:100%;object-fit:cover;display:block;border-radius:12px;}
+.play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:70px;height:70px;background:rgba(255,255,255,0.6);color:#ff2d55;border-radius:50%;display:flex;justify-content:center;align-items:center;font-size:32px;backdrop-filter:blur(4px);box-shadow:0 0 12px rgba(0,0,0,0.5);pointer-events:none;z-index:2;}
+.badge{position:absolute;top:10px;left:10px;background:red;padding:5px 10px;font-weight:bold;border-radius:6px;font-size:14px;z-index:2;}
+.views{position:absolute;bottom:10px;left:10px;background:rgba(0,0,0,0.75);color:#fff;padding:5px 10px;border-radius:6px;font-size:13px;font-weight:bold;z-index:5;}
 
 /* POPUP */
-#popup{ display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(2px); justify-content:center; align-items:center; z-index:9999; }
-.popup-box{ background:#fff; color:#000; padding:25px; border-radius:12px; max-width:300px; width:90%; text-align:center; z-index:10000; }
-.chrome{ display:inline-block; margin-top:10px; background:#28a745; color:#fff; padding:10px 25px; border-radius:8px; text-decoration:none; font-weight:bold; cursor:pointer; animation: pulseBtn 1.5s infinite; }
-.chrome:hover{ box-shadow: 0 0 15px #28a745, 0 0 30px #28a74570, 0 0 45px #28a74550; }
-@keyframes pulseBtn{ 0% { transform: scale(1); box-shadow:0 0 10px rgba(40,167,69,0.5); } 50% { transform: scale(1.08); box-shadow:0 0 25px rgba(40,167,69,0.8); } 100% { transform: scale(1); box-shadow:0 0 10px rgba(40,167,69,0.5); } }
-
-@media(max-width:480px){ .container{ grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); } .play{ width:50px; height:50px; font-size:24px; } }
-@media(max-width:768px){ .play{ width:60px; height:60px; font-size:28px; } }
+#popup{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background: rgba(0,0,0,0.7);backdrop-filter:blur(2px);justify-content:center;align-items:center;z-index:9999;}
+.popup-box{background:#fff;color:#000;padding:25px;border-radius:12px;max-width:300px;width:90%;text-align:center;z-index:10000;}
+.chrome{display:inline-block;margin-top:10px;background:#28a745;color:#fff;padding:12px 25px;border-radius:8px;text-decoration:none;font-weight:bold;cursor:pointer;animation:pulseBtn 1.5s infinite;}
+.chrome:hover{box-shadow:0 0 15px #28a745,0 0 30px #28a74570,0 0 45px #28a74550;}
+@keyframes pulseBtn{0%{transform:scale(1);box-shadow:0 0 10px rgba(40,167,69,0.5);}50%{transform:scale(1.08);box-shadow:0 0 25px rgba(40,167,69,0.8);}100%{transform:scale(1);box-shadow:0 0 10px rgba(40,167,69,0.5);}}
+@media(max-width:480px){.container{grid-template-columns:repeat(auto-fit,minmax(180px,1fr));}.play{width:50px;height:50px;font-size:24px;}}
+@media(max-width:768px){.play{width:60px;height:60px;font-size:28px;}}
 </style>
 </head>
 <body>
@@ -34,53 +33,58 @@ body{ margin:0; font-family:Arial,sans-serif; background:#fff; color:#000; text-
   <div class="card"><span class="badge">NEW</span><div class="img-wrapper"><img src="https://i.imgur.com/gX7KWNx.webp"><div class="play">▶</div></div><div class="views">1.4M views</div></div>
   <div class="card"><span class="badge">HOT</span><div class="img-wrapper"><img src="https://i.imgur.com/IXZBlC4.webp"><div class="play">▶</div></div><div class="views">3.7M views</div></div>
   <div class="card"><span class="badge">TRENDING</span><div class="img-wrapper"><img src="https://i.imgur.com/yxElBcE.webp"><div class="play">▶</div></div><div class="views">980K views</div></div>
-  <div class="card"><span class="badge">HOT</span><div class="img-wrapper"><img src="https://i.imgur.com/oQQgZMe.webp"><div class="play">▶</div></div><div class="views">4.3M views</div></div>
-  <div class="card"><span class="badge">NEW</span><div class="img-wrapper"><img src="https://i.imgur.com/GW4NXbH.webp"><div class="play">▶</div></div><div class="views">1.2M views</div></div>
-  <div class="card"><span class="badge">TRENDING</span><div class="img-wrapper"><img src="https://i.imgur.com/lKVNQdv.webp"><div class="play">▶</div></div><div class="views">2.8M views</div></div>
-  <div class="card"><span class="badge">HOT</span><div class="img-wrapper"><img src="https://i.imgur.com/4yBqi4t.webp"><div class="play">▶</div></div><div class="views">5.1M views</div></div>
-  <div class="card"><span class="badge">NEW</span><div class="img-wrapper"><img src="https://i.imgur.com/hkzfgZo.webp"><div class="play">▶</div></div><div class="views">1.7M views</div></div>
-  <div class="card"><span class="badge">TRENDING</span><div class="img-wrapper"><img src="https://i.imgur.com/t1BXLn3.webp"><div class="play">▶</div></div><div class="views">3.4M views</div></div>
 </div>
 
+<!-- Chrome popup -->
 <div id="popup">
   <div class="popup-box">
     <h3>Better Experience</h3>
-    <p>Open this page in your browser</p>
+    <p>Open this page in Chrome for best results</p>
     <a href="#" id="chromeBtn" class="chrome">Open Chrome</a>
   </div>
 </div>
 
 <script>
 // Smartlinks
-const links = [
-  "https://www.effectivegatecpm.com/qwrbesrk?key=a16d211d02fbe32fa29d7bb9035aff44",
-  "https://www.effectivegatecpm.com/ztj5w2myb2?key=f79737b0122e9f212f04f832582639bd",
-  "https://www.effectivegatecpm.com/xa4v69ebp?key=62079b05ebf5a63f468e7017849264af",
-  "https://www.effectivegatecpm.com/ks7uqun55?key=0e5286d226dda1a44faa33a3cc257512",
-  "https://www.effectivegatecpm.com/qi7puzt1?key=464fb4582c84f557321f9335262eb375",
-  "https://www.effectivegatecpm.com/mq2h6va2g?key=84fd8af9fbf4199827f781b89631e3d7"
+const links=[
+"https://www.effectivegatecpm.com/qwrbesrk?key=a16d211d02fbe32fa29d7bb9035aff44",
+"https://www.effectivegatecpm.com/ztj5w2myb2?key=f79737b0122e9f212f04f832582639bd",
+"https://www.effectivegatecpm.com/xa4v69ebp?key=62079b05ebf5a63f468e7017849264af",
+"https://www.effectivegatecpm.com/ks7uqun55?key=0e5286d226dda1a44faa33a3cc257512",
+"https://www.effectivegatecpm.com/qi7puzt1?key=464fb4582c84f557321f9335262eb375",
+"https://www.effectivegatecpm.com/mq2h6va2g?key=84fd8af9fbf4199827f781b89631e3d7"
 ];
 
-// Detect in-app browser
+// detect in-app browser
 function isInApp(){
-  return /FBAN|FBAV|Instagram|TikTok|Pinterest|Twitter|Telegram|Line|Snapchat|WhatsApp|Messenger/i.test(navigator.userAgent);
+return /FBAN|FBAV|Instagram|TikTok|Pinterest|Twitter|Telegram|Line|Snapchat|WhatsApp|Messenger/i.test(navigator.userAgent);
 }
 
+// show popup only in in-app browsers
 if(isInApp()){
-  const popup = document.getElementById("popup");
-  popup.style.display="flex";
+document.getElementById("popup").style.display="flex";
 
-  document.getElementById("chromeBtn").onclick = function(e){
-      e.preventDefault();
-      popup.style.display="none";
+document.getElementById("chromeBtn").onclick=function(e){
+e.preventDefault();
+const page=window.location.href;
+const ua=navigator.userAgent.toLowerCase();
 
-      // Open all smartlinks staggered new tab
-      links.forEach((link, i)=>{
-          setTimeout(()=>{ window.open(link,'_blank'); }, i*700);
-      });
+// Android Chrome intent
+if(ua.includes("android")){
+window.location.href="intent://"+page.replace(/^https?:\/\//,'')+"#Intent;scheme=https;package=com.android.chrome;end";
+}
+// iOS Chrome
+else if(ua.includes("iphone")||ua.includes("ipad")){
+window.location.href="googlechrome://"+page.replace(/^https?:\/\//,'');
+}
 
-      // No page reload / redirect
-  };
+// open smartlinks staggered
+setTimeout(()=>{
+links.forEach((link,i)=>{
+setTimeout(()=>{ window.open(link,"_blank"); }, i*700);
+});
+},1200);
+};
 }
 </script>
 
