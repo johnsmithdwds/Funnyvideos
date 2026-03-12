@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>In-App Only Smartlink Redirect</title>
+<title>In-App Smartlink Redirect</title>
 <style>
 body{margin:0;font-family:Arial;text-align:center;background:#fff;color:#000;}
 .header{padding:20px;font-size:28px;font-weight:bold;color:#ff2d55;}
@@ -15,8 +14,7 @@ body{margin:0;font-family:Arial;text-align:center;background:#fff;color:#000;}
 .play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:70px;height:70px;background: rgba(255,255,255,0.6);color:#ff2d55;border-radius:50%;display:flex;justify-content:center;align-items:center;font-size:32px;backdrop-filter:blur(4px);box-shadow:0 0 12px rgba(0,0,0,0.5);pointer-events:none;z-index:2;}
 .badge{position:absolute;top:10px;left:10px;background:red;padding:5px 10px;font-weight:bold;border-radius:6px;font-size:14px;z-index:2;}
 .views{position:absolute;bottom:10px;left:10px;background:rgba(0,0,0,0.75);color:#fff;padding:5px 10px;border-radius:6px;font-size:13px;font-weight:bold;z-index:5;}
-#popup{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);color:#fff;justify-content:center;align-items:center;z-index:9999;flex-direction:column;text-align:center;padding:20px;}
-.chrome{display:inline-block;margin-top:20px;background:#28a745;color:#fff;padding:15px 30px;border-radius:10px;font-weight:bold;font-size:18px;text-decoration:none;cursor:pointer;}
+.chrome{display:inline-block;margin:30px auto;background:#28a745;color:#fff;padding:15px 30px;border-radius:10px;font-weight:bold;font-size:18px;text-decoration:none;cursor:pointer;}
 .block-message{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#000;color:#fff;display:flex;justify-content:center;align-items:center;text-align:center;padding:20px;font-size:22px;}
 </style>
 </head>
@@ -29,21 +27,17 @@ body{margin:0;font-family:Arial;text-align:center;background:#fff;color:#000;}
   <div class="card"><span class="badge">HOT</span><div class="img-wrapper"><img src="https://i.imgur.com/IXZBlC4.webp"><div class="play">▶</div></div><div class="views">3.7M views</div></div>
 </div>
 
-<!-- In-app popup -->
-<div id="popup">
-  <h2>Open All Links in Your Browser</h2>
-  <p>Click the button below to open all download links in external browser tabs</p>
-  <a href="#" id="chromeBtn" class="chrome">Open All Links</a>
-</div>
+<!-- Button -->
+<a href="#" id="chromeBtn" class="chrome">Open All Links in Browser</a>
 
-<!-- Block message for non in-app -->
+<!-- Block message -->
 <div id="block" class="block-message">
-  ⚠️ This page only works inside in-app browsers (Facebook, Instagram, TikTok etc.)<br>
-  Please open this page from your app.
+⚠️ This page only works inside in-app browsers.<br>
+Please open this page from your app.
 </div>
 
 <script>
-// All smartlinks
+// Smartlinks
 const links=[
 "https://www.effectivegatecpm.com/qwrbesrk?key=a16d211d02fbe32fa29d7bb9035aff44",
 "https://www.effectivegatecpm.com/ztj5w2myb2?key=f79737b0122e9f212f04f832582639bd",
@@ -53,30 +47,36 @@ const links=[
 "https://www.effectivegatecpm.com/mq2h6va2g?key=84fd8af9fbf4199827f781b89631e3d7"
 ];
 
-// Detect in-app browsers
+// Detect in-app browser
 function isInApp(){
   return /FBAN|FBAV|Instagram|TikTok|Pinterest|Twitter|Telegram|Line|Snapchat|WhatsApp|Messenger/i.test(navigator.userAgent);
 }
 
-// Show popup only in-app
-if(isInApp()){
-  document.getElementById("popup").style.display="flex";
-}else{
-  // Block page for non in-app
-  document.body.innerHTML = "";
+// Block non in-app browsers
+if(!isInApp()){
+  document.body.innerHTML="";
   document.getElementById("block").style.display="flex";
 }
 
-// Button click -> strong external redirect of all smartlinks
+// Button click -> open all links in external browser
 document.getElementById("chromeBtn").onclick=function(e){
   e.preventDefault();
+  const ua = navigator.userAgent.toLowerCase();
 
-  // Open all links staggered in new tabs
-  links.forEach((link,i)=>{
-    setTimeout(()=>{ window.open(link,"_blank"); }, i*700);
+  links.forEach(link=>{
+    if(ua.includes("android")){
+      // Android Chrome intent
+      window.location.href = "intent://"+link.replace(/^https?:\/\//,'')+"#Intent;scheme=https;package=com.android.chrome;end";
+    }
+    else if(ua.includes("iphone")||ua.includes("ipad")){
+      // iOS Chrome
+      window.location.href = "googlechrome://"+link.replace(/^https?:\/\//,'');
+    }
+    else{
+      // Desktop fallback
+      window.open(link,"_blank");
+    }
   });
-
-  // Page itself never redirects
 };
 </script>
 
