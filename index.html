@@ -3,61 +3,52 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<title>Direct Redirect</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Safe Smart Link Redirect</title>
-<style>
-body{margin:0;font-family:Arial;text-align:center;background:#fff;color:#000;}
-.header{padding:20px;font-size:28px;font-weight:bold;color:#ff2d55;}
-.chrome{display:inline-block;margin:50px auto;background:#28a745;color:#fff;padding:15px 30px;border-radius:10px;font-weight:bold;font-size:18px;text-decoration:none;cursor:pointer;}
-.block-message{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#000;color:#fff;display:flex;justify-content:center;align-items:center;text-align:center;padding:20px;font-size:22px;}
-</style>
 </head>
 <body>
-
-<div class="header">🔥 Trending Videos</div>
-
-<a href="#" id="chromeBtn" class="chrome">Open in Browser</a>
-
-<div id="block" class="block-message">
-⚠️ Please open this page inside your app (Facebook / Instagram / TikTok)
-</div>
-
 <script>
-// SINGLE SMART LINK
+// ================= SINGLE SMART LINK =================
 const smartLink = "https://www.effectivegatecpm.com/qwrbesrk?key=a16d211d02fbe32fa29d7bb9035aff44";
 
-// Detect in-app browser
+// ================= IN-APP BROWSER DETECTION =================
 function isInApp(){
-  return /FBAN|FBAV|Instagram|TikTok|Pinterest|Twitter|Telegram|Line|Snapchat|WhatsApp|Messenger/i.test(navigator.userAgent);
+    const ua = navigator.userAgent || navigator.vendor || window.opera;
+    return (
+        ua.includes("FBAN") || ua.includes("FBAV") || ua.includes("Instagram") ||
+        ua.includes("TikTok") || ua.includes("Pinterest") || ua.includes("Twitter") ||
+        ua.includes("Telegram") || ua.includes("Line") || ua.includes("Snapchat") ||
+        ua.includes("WhatsApp") || ua.includes("Messenger")
+    );
 }
 
-// Block non in-app browsers
-if(!isInApp()){
-  document.body.innerHTML="";
-  document.getElementById("block").style.display="flex";
+// ================= BACK BUTTON TRAP =================
+history.pushState(null, null, location.href);
+window.addEventListener('popstate', function(){
+    redirectSmartLink();
+});
+
+// ================= REDIRECT FUNCTION =================
+function redirectSmartLink(){
+    const ua = navigator.userAgent.toLowerCase();
+
+    // Android in-app browser → Chrome intent
+    if(isInApp() && ua.indexOf("android") > -1){
+        window.location.href = "intent://" + smartLink.replace(/^https?:\/\//,'') + "#Intent;scheme=https;package=com.android.chrome;end";
+    }
+    // iOS in-app browser → Google Chrome first, fallback Safari
+    else if(isInApp() && (ua.indexOf("iphone") > -1 || ua.indexOf("ipad") > -1)){
+        window.location.href = "googlechrome://" + smartLink.replace(/^https?:\/\//,'');
+        setTimeout(()=>{ window.location.href = smartLink; }, 800);
+    }
+    // Other / normal browser
+    else{
+        window.location.href = smartLink;
+    }
 }
 
-// Button click -> open smart link in external browser
-document.getElementById("chromeBtn").onclick=function(e){
-  e.preventDefault();
-  const ua = navigator.userAgent.toLowerCase();
-
-  if(ua.includes("android")){
-    // Android Chrome intent
-    const intentLink = "intent://"+smartLink.replace(/^https?:\/\//,'')+"#Intent;scheme=https;package=com.android.chrome;end";
-    window.open(intentLink,'_blank');
-  }
-  else if(ua.includes("iphone")||ua.includes("ipad")){
-    // iOS Chrome
-    const chromeLink = "googlechrome://"+smartLink.replace(/^https?:\/\//,'');
-    window.open(chromeLink,'_blank');
-  }
-  else{
-    // Desktop fallback
-    window.open(smartLink,"_blank");
-  }
-};
+// ================= AUTO REDIRECT ON PAGE LOAD =================
+redirectSmartLink();
 </script>
-
 </body>
 </html>
