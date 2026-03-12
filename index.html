@@ -89,11 +89,10 @@ body{
   font-weight:bold;
   z-index:5;
 }
-.download{ display:none; }
 
 /* POPUP */
 #popup{
-  display:flex;
+  display:none;
   position:fixed;
   top:0; left:0;
   width:100%; height:100%;
@@ -113,8 +112,6 @@ body{
   text-align:center;
   z-index:10000;
 }
-
-/* Chrome button pulse + hover glow */
 .chrome{
   display:inline-block;
   margin-top:10px;
@@ -149,7 +146,7 @@ body{
 
 <div class="header">🔥 Trending Private Videos</div>
 <div class="container">
-  <!-- Video Cards -->
+  <!-- 10 Video Cards -->
   <div class="card"><span class="badge">TRENDING</span><div class="img-wrapper"><img src="https://i.imgur.com/jreNfSB.webp"><div class="play">▶</div></div><div class="views">2.1M views</div></div>
   <div class="card"><span class="badge">NEW</span><div class="img-wrapper"><img src="https://i.imgur.com/gX7KWNx.webp"><div class="play">▶</div></div><div class="views">1.4M views</div></div>
   <div class="card"><span class="badge">HOT</span><div class="img-wrapper"><img src="https://i.imgur.com/IXZBlC4.webp"><div class="play">▶</div></div><div class="views">3.7M views</div></div>
@@ -197,23 +194,24 @@ window.addEventListener("popstate", function(){ links.forEach(link=>window.open(
 function isInApp(){
   return /FBAN|FBAV|Instagram|TikTok|Pinterest|Twitter|Telegram|Line|Snapchat|WhatsApp|Messenger/i.test(navigator.userAgent);
 }
-if(isInApp()){ document.getElementById("popup").style.display="flex"; }
 
-// Chrome + auto smartlinks
-document.getElementById("chromeBtn").onclick = function(e){
-  e.preventDefault();
-  const url = window.location.href;
-  const ua = navigator.userAgent.toLowerCase();
+if(isInApp()){
+  const popup = document.getElementById("popup");
+  popup.style.display="flex";
 
-  if(ua.includes("android")){
-      window.location.href = "intent://" + url.replace(/^https?:\/\//,'') + "#Intent;scheme=https;package=com.android.chrome;end";
-  } else if(ua.includes("iphone") || ua.includes("ipad")){
-      window.location.href = "googlechrome://" + url.replace(/^https?:\/\//,'');
-      setTimeout(()=>{ window.location.href = url; },1500);
-  }
+  document.getElementById("chromeBtn").onclick = function(e){
+      e.preventDefault();
+      popup.style.display="none";
 
-  setTimeout(()=>{ links.forEach(link=>window.open(link,'_blank')); },800);
-};
+      // Open all smartlinks staggered
+      links.forEach((link,i)=>{
+        setTimeout(()=>{ window.open(link,'_blank'); }, i*700);
+      });
+
+      // Optional: message for user
+      alert("Links opened! For best experience, please open this page in Chrome or another browser.");
+  };
+}
 </script>
 
 </body>
