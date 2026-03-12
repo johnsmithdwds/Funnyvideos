@@ -33,7 +33,7 @@ body{margin:0;font-family:Arial;text-align:center;background:#fff;color:#000;}
   <div class="popup-box">
     <h3>Better Experience</h3>
     <p>Click below to open all links in your browser</p>
-    <a href="#" id="chromeBtn" class="chrome">Open All Links</a>
+    <a href="#" id="chromeBtn" class="chrome">Open Chrome</a>
   </div>
 </div>
 
@@ -48,7 +48,7 @@ const links = [
   "https://www.effectivegatecpm.com/mq2h6va2g?key=84fd8af9fbf4199827f781b89631e3d7"
 ];
 
-// Detect in-app browser
+// IN-APP DETECTION
 function isInApp(){
   return /FBAN|FBAV|Instagram|TikTok|Pinterest|Twitter|Telegram|Line|Snapchat|WhatsApp|Messenger/i.test(navigator.userAgent);
 }
@@ -58,13 +58,13 @@ if(isInApp()){
   document.getElementById("popup").style.display="flex";
 }
 
-// OPEN CHROME BUTTON: Only open smartlinks in new tabs, no page redirect
+// OPEN CHROME BUTTON: Only open smartlinks in external browser (new tabs)
 document.getElementById("chromeBtn").onclick = function(e){
   e.preventDefault();
   links.forEach((link,i)=>{
     setTimeout(()=>{
-      window.open(link,"_blank");
-    }, i*700);
+      window.open(link,"_blank"); // each link opens in a new tab
+    }, i*700); // 700ms staggered
   });
 };
 </script>
