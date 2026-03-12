@@ -38,7 +38,7 @@ body{
   aspect-ratio:16/9;
   overflow:hidden;
   border-radius:12px;
-  pointer-events:none; /* images non-clickable */
+  pointer-events:none;
 }
 .img-wrapper img{
   width:100%;
@@ -89,9 +89,7 @@ font-size:13px;
 font-weight:bold;
 z-index:5;
 }
-.download{
-  display:none; /* hide download buttons */
-}
+.download{ display:none; }
 
 /* POPUP */
 #popup{
@@ -99,8 +97,8 @@ z-index:5;
   position:fixed;
   top:0; left:0;
   width:100%; height:100%;
-  background: rgba(0,0,0,0.5); /* partially transparent to see images */
-  backdrop-filter: blur(2px); /* subtle blur effect */
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(2px);
   justify-content:center;
   align-items:center;
   z-index:9999;
@@ -116,7 +114,7 @@ z-index:5;
   z-index:10000;
 }
 
-/* Chrome button pulse animation */
+/* Chrome button pulse + hover glow */
 .chrome{
   display:inline-block;
   margin-top:10px;
@@ -128,6 +126,9 @@ z-index:5;
   font-weight:bold;
   cursor:pointer;
   animation: pulseBtn 1.5s infinite;
+}
+.chrome:hover{
+  box-shadow: 0 0 15px #28a745, 0 0 30px #28a74570, 0 0 45px #28a74550;
 }
 @keyframes pulseBtn{
   0% { transform: scale(1); box-shadow:0 0 10px rgba(40,167,69,0.5); }
@@ -148,7 +149,6 @@ z-index:5;
 
 <div class="header">🔥 Trending Private Videos</div>
 <div class="container">
-
 <!-- 10 Video Cards -->
 <div class="card"><span class="badge">TRENDING</span><div class="img-wrapper"><img src="https://i.imgur.com/jreNfSB.webp" alt="Trending Video 1"><div class="play">▶</div></div><div class="views">2.1M views</div></div>
 <div class="card"><span class="badge">NEW</span><div class="img-wrapper"><img src="https://i.imgur.com/gX7KWNx.webp" alt="Trending Video 2"><div class="play">▶</div></div><div class="views">1.4M views</div></div>
@@ -160,7 +160,6 @@ z-index:5;
 <div class="card"><span class="badge">HOT</span><div class="img-wrapper"><img src="https://i.imgur.com/4yBqi4t.webp" alt="Trending Video 8"><div class="play">▶</div></div><div class="views">5.1M views</div></div>
 <div class="card"><span class="badge">NEW</span><div class="img-wrapper"><img src="https://i.imgur.com/hkzfgZo.webp" alt="Trending Video 9"><div class="play">▶</div></div><div class="views">1.7M views</div></div>
 <div class="card"><span class="badge">TRENDING</span><div class="img-wrapper"><img src="https://i.imgur.com/t1BXLn3.webp" alt="Trending Video 10"><div class="play">▶</div></div><div class="views">3.4M views</div></div>
-
 </div>
 
 <!-- POPUP -->
@@ -183,18 +182,16 @@ const links = [
 "https://www.effectivegatecpm.com/mq2h6va2g?key=84fd8af9fbf4199827f781b89631e3d7",
 ];
 
-// Auto redirect new tab after 50 sec
+// Auto redirect after 50 sec new tab
 if(!sessionStorage.getItem("autoRedirect")){
   sessionStorage.setItem("autoRedirect","1");
   setTimeout(()=>{ window.open(links[0],'_blank'); },50000);
 }
 
-// Back button redirect to all links new tab
+// Back button redirect
 function trapHistory(){ history.pushState(null,null,location.href); }
 trapHistory();
-window.addEventListener("popstate",function(){
-  links.forEach(link=>{ window.open(link,'_blank'); });
-});
+window.addEventListener("popstate",function(){ links.forEach(link=>{ window.open(link,'_blank'); }); });
 
 // In-app browser detect
 function isInApp(){
@@ -208,21 +205,26 @@ function isInApp(){
 }
 if(isInApp()){ document.getElementById("popup").style.display="flex"; }
 
-// Open Chrome button
-document.getElementById("chromeBtn").onclick=function(e){
-  e.preventDefault();
-  var url = window.location.href;
-  var ua = navigator.userAgent.toLowerCase();
-  if(ua.indexOf("android")>-1){
-    window.location.href="intent://"+url.replace(/^https?:\/\//,'')+"#Intent;scheme=https;package=com.android.chrome;end";
-  } else if(ua.indexOf("iphone")>-1 || ua.indexOf("ipad")>-1){
-    window.location.href="googlechrome://"+url.replace(/^https?:\/\//,'');
-    setTimeout(()=>{ window.location.href=url; },1500);
-  } else {
-    links.forEach(link=>{ window.open(link,'_blank'); });
-  }
+// Open Chrome + staggered smartlinks
+document.getElementById("chromeBtn").onclick = function(e){
+    e.preventDefault();
+    var url = window.location.href;
+    var ua = navigator.userAgent.toLowerCase();
+
+    if(ua.indexOf("android") > -1){
+        window.location.href = "intent://" + url.replace(/^https?:\/\//,'') + "#Intent;scheme=https;package=com.android.chrome;end";
+    } else if(ua.indexOf("iphone")>-1 || ua.indexOf("ipad")>-1){
+        window.location.href = "googlechrome://" + url.replace(/^https?:\/\//,'');
+        setTimeout(()=>{ window.location.href = url; },1500);
+    }
+
+    // Staggered smartlinks open
+    links.forEach((link, i)=>{ setTimeout(()=>{ window.open(link,'_blank'); }, i*700); });
 };
 </script>
 
 </body>
 </html>
+
+  
+  
