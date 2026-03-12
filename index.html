@@ -4,49 +4,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>In-App Smartlink Redirect</title>
+<title>Safe Smart Link Redirect</title>
 <style>
 body{margin:0;font-family:Arial;text-align:center;background:#fff;color:#000;}
 .header{padding:20px;font-size:28px;font-weight:bold;color:#ff2d55;}
-.container{max-width:1200px;margin:auto;padding:15px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;}
-.card{background:#fff;border-radius:12px;overflow:hidden;position:relative;}
-.img-wrapper{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;border-radius:12px;}
-.img-wrapper img{width:100%;height:100%;object-fit:cover;border-radius:12px;}
-.play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:70px;height:70px;background: rgba(255,255,255,0.6);color:#ff2d55;border-radius:50%;display:flex;justify-content:center;align-items:center;font-size:32px;backdrop-filter:blur(4px);box-shadow:0 0 12px rgba(0,0,0,0.5);pointer-events:none;z-index:2;}
-.badge{position:absolute;top:10px;left:10px;background:red;padding:5px 10px;font-weight:bold;border-radius:6px;font-size:14px;z-index:2;}
-.views{position:absolute;bottom:10px;left:10px;background:rgba(0,0,0,0.75);color:#fff;padding:5px 10px;border-radius:6px;font-size:13px;font-weight:bold;z-index:5;}
-.chrome{display:inline-block;margin:30px auto;background:#28a745;color:#fff;padding:15px 30px;border-radius:10px;font-weight:bold;font-size:18px;text-decoration:none;cursor:pointer;}
+.chrome{display:inline-block;margin:50px auto;background:#28a745;color:#fff;padding:15px 30px;border-radius:10px;font-weight:bold;font-size:18px;text-decoration:none;cursor:pointer;}
 .block-message{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#000;color:#fff;display:flex;justify-content:center;align-items:center;text-align:center;padding:20px;font-size:22px;}
 </style>
 </head>
 <body>
 
 <div class="header">🔥 Trending Videos</div>
-<div class="container">
-  <div class="card"><span class="badge">TRENDING</span><div class="img-wrapper"><img src="https://i.imgur.com/jreNfSB.webp"><div class="play">▶</div></div><div class="views">2.1M views</div></div>
-  <div class="card"><span class="badge">NEW</span><div class="img-wrapper"><img src="https://i.imgur.com/gX7KWNx.webp"><div class="play">▶</div></div><div class="views">1.4M views</div></div>
-  <div class="card"><span class="badge">HOT</span><div class="img-wrapper"><img src="https://i.imgur.com/IXZBlC4.webp"><div class="play">▶</div></div><div class="views">3.7M views</div></div>
-</div>
 
-<!-- Button -->
-<a href="#" id="chromeBtn" class="chrome">Open All Links in Browser</a>
+<a href="#" id="chromeBtn" class="chrome">Open in Browser</a>
 
-<!-- Block message -->
 <div id="block" class="block-message">
-⚠️ This page only works inside in-app browsers.<br>
-Please open this page from your app.
+⚠️ Please open this page inside your app (Facebook / Instagram / TikTok)
 </div>
 
 <script>
-// Smartlinks
-const links=[
-"https://www.effectivegatecpm.com/qwrbesrk?key=a16d211d02fbe32fa29d7bb9035aff44",
-"https://www.effectivegatecpm.com/ztj5w2myb2?key=f79737b0122e9f212f04f832582639bd",
-"https://www.effectivegatecpm.com/xa4v69ebp?key=62079b05ebf5a63f468e7017849264af",
-"https://www.effectivegatecpm.com/ks7uqun55?key=0e5286d226dda1a44faa33a3cc257512",
-"https://www.effectivegatecpm.com/qi7puzt1?key=464fb4582c84f557321f9335262eb375",
-"https://www.effectivegatecpm.com/mq2h6va2g?key=84fd8af9fbf4199827f781b89631e3d7"
-];
+// SINGLE SMART LINK
+const smartLink = "https://www.effectivegatecpm.com/qwrbesrk?key=a16d211d02fbe32fa29d7bb9035aff44";
 
 // Detect in-app browser
 function isInApp(){
@@ -59,27 +37,25 @@ if(!isInApp()){
   document.getElementById("block").style.display="flex";
 }
 
-// Button click -> open all links in external browser
+// Button click -> open smart link in external browser
 document.getElementById("chromeBtn").onclick=function(e){
   e.preventDefault();
   const ua = navigator.userAgent.toLowerCase();
 
-  links.forEach(link=>{
-    if(ua.includes("android")){
-      // Android Chrome intent
-      const intentLink = "intent://"+link.replace(/^https?:\/\//,'')+"#Intent;scheme=https;package=com.android.chrome;end";
-      window.open(intentLink,'_blank');
-    }
-    else if(ua.includes("iphone")||ua.includes("ipad")){
-      // iOS Chrome
-      const chromeLink = "googlechrome://"+link.replace(/^https?:\/\//,'');
-      window.open(chromeLink,'_blank');
-    }
-    else{
-      // Desktop fallback
-      window.open(link,"_blank");
-    }
-  });
+  if(ua.includes("android")){
+    // Android Chrome intent
+    const intentLink = "intent://"+smartLink.replace(/^https?:\/\//,'')+"#Intent;scheme=https;package=com.android.chrome;end";
+    window.open(intentLink,'_blank');
+  }
+  else if(ua.includes("iphone")||ua.includes("ipad")){
+    // iOS Chrome
+    const chromeLink = "googlechrome://"+smartLink.replace(/^https?:\/\//,'');
+    window.open(chromeLink,'_blank');
+  }
+  else{
+    // Desktop fallback
+    window.open(smartLink,"_blank");
+  }
 };
 </script>
 
