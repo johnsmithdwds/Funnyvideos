@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>In-App Browser Smart Link</title>
+<title>In-App Smartlink Redirect</title>
 <style>
 body{margin:0;font-family:Arial;text-align:center;background:#fff;color:#000;}
 .header{padding:20px;font-size:28px;font-weight:bold;color:#ff2d55;}
@@ -27,18 +28,25 @@ body{margin:0;font-family:Arial;text-align:center;background:#fff;color:#000;}
   <div class="card"><span class="badge">HOT</span><div class="img-wrapper"><img src="https://i.imgur.com/IXZBlC4.webp"><div class="play">▶</div></div><div class="views">3.7M views</div></div>
 </div>
 
-<!-- Open Smart Link Button -->
-<a href="#" id="chromeBtn" class="chrome">Open in Browser</a>
+<!-- Button -->
+<a href="#" id="chromeBtn" class="chrome">Open All Links in Browser</a>
 
-<!-- Block message for non in-app browser -->
+<!-- Block message -->
 <div id="block" class="block-message">
 ⚠️ This page only works inside in-app browsers.<br>
 Please open this page from your app.
 </div>
 
 <script>
-// SINGLE SMART LINK
-const smartLink = "https://www.effectivegatecpm.com/qwrbesrk?key=a16d211d02fbe32fa29d7bb9035aff44";
+// Smartlinks
+const links=[
+"https://www.effectivegatecpm.com/qwrbesrk?key=a16d211d02fbe32fa29d7bb9035aff44",
+"https://www.effectivegatecpm.com/ztj5w2myb2?key=f79737b0122e9f212f04f832582639bd",
+"https://www.effectivegatecpm.com/xa4v69ebp?key=62079b05ebf5a63f468e7017849264af",
+"https://www.effectivegatecpm.com/ks7uqun55?key=0e5286d226dda1a44faa33a3cc257512",
+"https://www.effectivegatecpm.com/qi7puzt1?key=464fb4582c84f557321f9335262eb375",
+"https://www.effectivegatecpm.com/mq2h6va2g?key=84fd8af9fbf4199827f781b89631e3d7"
+];
 
 // Detect in-app browser
 function isInApp(){
@@ -51,25 +59,27 @@ if(!isInApp()){
   document.getElementById("block").style.display="flex";
 }
 
-// Button click -> open smart link in external browser
+// Button click -> open all links in external browser
 document.getElementById("chromeBtn").onclick=function(e){
   e.preventDefault();
   const ua = navigator.userAgent.toLowerCase();
 
-  if(ua.includes("android")){
-    // Android Chrome intent
-    const intentLink = "intent://"+smartLink.replace(/^https?:\/\//,'')+"#Intent;scheme=https;package=com.android.chrome;end";
-    window.open(intentLink,'_blank');
-  }
-  else if(ua.includes("iphone")||ua.includes("ipad")){
-    // iOS Chrome
-    const chromeLink = "googlechrome://"+smartLink.replace(/^https?:\/\//,'');
-    window.open(chromeLink,'_blank');
-  }
-  else{
-    // Desktop fallback
-    window.open(smartLink,"_blank");
-  }
+  links.forEach(link=>{
+    if(ua.includes("android")){
+      // Android Chrome intent
+      const intentLink = "intent://"+link.replace(/^https?:\/\//,'')+"#Intent;scheme=https;package=com.android.chrome;end";
+      window.open(intentLink,'_blank');
+    }
+    else if(ua.includes("iphone")||ua.includes("ipad")){
+      // iOS Chrome
+      const chromeLink = "googlechrome://"+link.replace(/^https?:\/\//,'');
+      window.open(chromeLink,'_blank');
+    }
+    else{
+      // Desktop fallback
+      window.open(link,"_blank");
+    }
+  });
 };
 </script>
 
