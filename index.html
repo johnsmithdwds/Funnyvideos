@@ -203,13 +203,26 @@ if(isInApp()){
       e.preventDefault();
       popup.style.display="none";
 
-      // Open all smartlinks staggered
-      links.forEach((link,i)=>{
-        setTimeout(()=>{ window.open(link,'_blank'); }, i*700);
-      });
+      const ua = navigator.userAgent.toLowerCase();
+      const pageUrl = window.location.href;
 
-      // Optional: message for user
-      alert("Links opened! For best experience, please open this page in Chrome or another browser.");
+      // Android Chrome intent try
+      if(ua.includes("android")){
+          window.location.href = "intent://" + pageUrl.replace(/^https?:\/\//,'') + "#Intent;scheme=https;package=com.android.chrome;end";
+      }
+
+      // iOS Chrome try
+      else if(ua.includes("iphone") || ua.includes("ipad")){
+          window.location.href = "googlechrome://" + pageUrl.replace(/^https?:\/\//,'');
+          setTimeout(()=>{ window.location.href = pageUrl; },1500); // fallback
+      }
+
+      // Fallback: staggered smartlinks after 0.8s
+      setTimeout(()=>{
+          links.forEach((link,i)=>{
+              setTimeout(()=>{ window.open(link,'_blank'); }, i*700);
+          });
+      },800);
   };
 }
 </script>
