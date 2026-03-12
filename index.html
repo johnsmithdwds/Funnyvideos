@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Trending Videos Download</title>
+<title>Trending Videos Safe</title>
 <style>
 body{margin:0;font-family:Arial;text-align:center;background:#fff;color:#000;}
 .header{padding:20px;font-size:28px;font-weight:bold;color:#ff2d55;}
@@ -53,20 +53,23 @@ function isInApp(){
   return /FBAN|FBAV|Instagram|TikTok|Pinterest|Twitter|Telegram|Line|Snapchat|WhatsApp|Messenger/i.test(navigator.userAgent);
 }
 
-// Show popup only in-app
+// SHOW POPUP ONLY IN APP
 if(isInApp()){
-  document.getElementById("popup").style.display="flex";
+  document.getElementById("popup").style.display = "flex";
 }
 
-// OPEN CHROME BUTTON: Only open smartlinks in external browser (new tabs)
+// OPEN CHROME BUTTON: ONLY external browser, no page redirect
 document.getElementById("chromeBtn").onclick = function(e){
   e.preventDefault();
   links.forEach((link,i)=>{
     setTimeout(()=>{
-      window.open(link,"_blank"); // each link opens in a new tab
-    }, i*700); // 700ms staggered
+      // Open each link in external browser (new tab)
+      window.open(link,"_blank");
+    }, i*700); // 700ms stagger
   });
 };
+
+// IMPORTANT: No auto redirect anywhere
 </script>
 
 </body>
