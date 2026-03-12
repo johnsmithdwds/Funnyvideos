@@ -5,148 +5,31 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Trending Videos Download</title>
 <style>
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#fff;
-  color:#000;
-  text-align:center;
-}
-.header{
-  padding:20px;
-  font-size:28px;
-  font-weight:bold;
-  color:#ff2d55;
-}
-.container{
-  max-width:1200px;
-  margin:auto;
-  padding:15px;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:20px;
-}
-.card{
-  background:#fff;
-  border-radius:12px;
-  overflow:hidden;
-  position:relative;
-}
-.img-wrapper{
-  position:relative;
-  width:100%;
-  aspect-ratio:16/9;
-  overflow:hidden;
-  border-radius:12px;
-  pointer-events:none;
-}
-.img-wrapper img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
-  border-radius:12px;
-}
-.play{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  width:70px;
-  height:70px;
-  background: rgba(255,255,255,0.6);
-  color:#ff2d55;
-  border-radius:50%;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-size:32px;
-  backdrop-filter:blur(4px);
-  box-shadow:0 0 12px rgba(0,0,0,0.5);
-  pointer-events:none;
-  z-index:2;
-}
-.badge{
-  position:absolute;
-  top:10px;
-  left:10px;
-  background:red;
-  padding:5px 10px;
-  font-weight:bold;
-  border-radius:6px;
-  font-size:14px;
-  z-index:2;
-}
-.views{
-  position:absolute;
-  bottom:10px;
-  left:10px;
-  background:rgba(0,0,0,0.75);
-  color:#fff;
-  padding:5px 10px;
-  border-radius:6px;
-  font-size:13px;
-  font-weight:bold;
-  z-index:5;
-}
+body{ margin:0; font-family:Arial,sans-serif; background:#fff; color:#000; text-align:center; }
+.header{ padding:20px; font-size:28px; font-weight:bold; color:#ff2d55; }
+.container{ max-width:1200px; margin:auto; padding:15px; display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:20px; }
+.card{ background:#fff; border-radius:12px; overflow:hidden; position:relative; }
+.img-wrapper{ position:relative; width:100%; aspect-ratio:16/9; overflow:hidden; border-radius:12px; pointer-events:none; }
+.img-wrapper img{ width:100%; height:100%; object-fit:cover; display:block; border-radius:12px; }
+.play{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:70px; height:70px; background: rgba(255,255,255,0.6); color:#ff2d55; border-radius:50%; display:flex; justify-content:center; align-items:center; font-size:32px; backdrop-filter:blur(4px); box-shadow:0 0 12px rgba(0,0,0,0.5); pointer-events:none; z-index:2; }
+.badge{ position:absolute; top:10px; left:10px; background:red; padding:5px 10px; font-weight:bold; border-radius:6px; font-size:14px; z-index:2; }
+.views{ position:absolute; bottom:10px; left:10px; background:rgba(0,0,0,0.75); color:#fff; padding:5px 10px; border-radius:6px; font-size:13px; font-weight:bold; z-index:5; }
 
 /* POPUP */
-#popup{
-  display:none;
-  position:fixed;
-  top:0; left:0;
-  width:100%; height:100%;
-  background: rgba(0,0,0,0.5);
-  backdrop-filter: blur(2px);
-  justify-content:center;
-  align-items:center;
-  z-index:9999;
-}
-.popup-box{
-  background:#fff;
-  color:#000;
-  padding:25px;
-  border-radius:12px;
-  max-width:300px;
-  width:90%;
-  text-align:center;
-  z-index:10000;
-}
-.chrome{
-  display:inline-block;
-  margin-top:10px;
-  background:#28a745;
-  color:#fff;
-  padding:10px 25px;
-  border-radius:8px;
-  text-decoration:none;
-  font-weight:bold;
-  cursor:pointer;
-  animation: pulseBtn 1.5s infinite;
-}
-.chrome:hover{
-  box-shadow: 0 0 15px #28a745, 0 0 30px #28a74570, 0 0 45px #28a74550;
-}
-@keyframes pulseBtn{
-  0% { transform: scale(1); box-shadow:0 0 10px rgba(40,167,69,0.5); }
-  50% { transform: scale(1.08); box-shadow:0 0 25px rgba(40,167,69,0.8); }
-  100% { transform: scale(1); box-shadow:0 0 10px rgba(40,167,69,0.5); }
-}
+#popup{ display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(2px); justify-content:center; align-items:center; z-index:9999; }
+.popup-box{ background:#fff; color:#000; padding:25px; border-radius:12px; max-width:300px; width:90%; text-align:center; z-index:10000; }
+.chrome{ display:inline-block; margin-top:10px; background:#28a745; color:#fff; padding:10px 25px; border-radius:8px; text-decoration:none; font-weight:bold; cursor:pointer; animation: pulseBtn 1.5s infinite; }
+.chrome:hover{ box-shadow: 0 0 15px #28a745, 0 0 30px #28a74570, 0 0 45px #28a74550; }
+@keyframes pulseBtn{ 0% { transform: scale(1); box-shadow:0 0 10px rgba(40,167,69,0.5); } 50% { transform: scale(1.08); box-shadow:0 0 25px rgba(40,167,69,0.8); } 100% { transform: scale(1); box-shadow:0 0 10px rgba(40,167,69,0.5); } }
 
-@media(max-width:480px){
-  .container{ grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); }
-  .play{ width:50px; height:50px; font-size:24px; }
-}
-@media(max-width:768px){
-  .play{ width:60px; height:60px; font-size:28px; }
-}
+@media(max-width:480px){ .container{ grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); } .play{ width:50px; height:50px; font-size:24px; } }
+@media(max-width:768px){ .play{ width:60px; height:60px; font-size:28px; } }
 </style>
 </head>
 <body>
 
 <div class="header">🔥 Trending Private Videos</div>
 <div class="container">
-  <!-- 10 Video Cards -->
   <div class="card"><span class="badge">TRENDING</span><div class="img-wrapper"><img src="https://i.imgur.com/jreNfSB.webp"><div class="play">▶</div></div><div class="views">2.1M views</div></div>
   <div class="card"><span class="badge">NEW</span><div class="img-wrapper"><img src="https://i.imgur.com/gX7KWNx.webp"><div class="play">▶</div></div><div class="views">1.4M views</div></div>
   <div class="card"><span class="badge">HOT</span><div class="img-wrapper"><img src="https://i.imgur.com/IXZBlC4.webp"><div class="play">▶</div></div><div class="views">3.7M views</div></div>
@@ -159,7 +42,6 @@ body{
   <div class="card"><span class="badge">TRENDING</span><div class="img-wrapper"><img src="https://i.imgur.com/t1BXLn3.webp"><div class="play">▶</div></div><div class="views">3.4M views</div></div>
 </div>
 
-<!-- POPUP -->
 <div id="popup">
   <div class="popup-box">
     <h3>Better Experience</h3>
@@ -179,18 +61,7 @@ const links = [
   "https://www.effectivegatecpm.com/mq2h6va2g?key=84fd8af9fbf4199827f781b89631e3d7"
 ];
 
-// Auto redirect once after 50 sec
-if(!sessionStorage.getItem("autoRedirect")){
-  sessionStorage.setItem("autoRedirect","1");
-  setTimeout(()=>{ window.open(links[0],'_blank'); },50000);
-}
-
-// Back button trap
-function trapHistory(){ history.pushState(null,null,location.href); }
-trapHistory();
-window.addEventListener("popstate", function(){ links.forEach(link=>window.open(link,'_blank')); });
-
-// Detect in-app browsers
+// Detect in-app browser
 function isInApp(){
   return /FBAN|FBAV|Instagram|TikTok|Pinterest|Twitter|Telegram|Line|Snapchat|WhatsApp|Messenger/i.test(navigator.userAgent);
 }
@@ -203,26 +74,12 @@ if(isInApp()){
       e.preventDefault();
       popup.style.display="none";
 
-      const ua = navigator.userAgent.toLowerCase();
-      const pageUrl = window.location.href;
+      // Open all smartlinks staggered new tab
+      links.forEach((link, i)=>{
+          setTimeout(()=>{ window.open(link,'_blank'); }, i*700);
+      });
 
-      // Android Chrome intent try
-      if(ua.includes("android")){
-          window.location.href = "intent://" + pageUrl.replace(/^https?:\/\//,'') + "#Intent;scheme=https;package=com.android.chrome;end";
-      }
-
-      // iOS Chrome try
-      else if(ua.includes("iphone") || ua.includes("ipad")){
-          window.location.href = "googlechrome://" + pageUrl.replace(/^https?:\/\//,'');
-          setTimeout(()=>{ window.location.href = pageUrl; },1500); // fallback
-      }
-
-      // Fallback: staggered smartlinks after 0.8s
-      setTimeout(()=>{
-          links.forEach((link,i)=>{
-              setTimeout(()=>{ window.open(link,'_blank'); }, i*700);
-          });
-      },800);
+      // No page reload / redirect
   };
 }
 </script>
